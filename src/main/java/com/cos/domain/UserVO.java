@@ -7,6 +7,7 @@ public class UserVO {
 	private String userEmail;
 	private boolean userEmailCheck;
 	private String userSalt;
+	
 	public String getUserID() {
 		return userID;
 	}

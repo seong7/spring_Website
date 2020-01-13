@@ -3,17 +3,24 @@ package com.cos.controller;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.cos.domain.UserVO;
 import com.cos.service.CategoryService;
+import com.cos.service.UserService;
 
 @Controller
 public class UserController {
 
 	@Inject
 	private CategoryService ctService;
+	@Inject
+	private UserService userService;
 	
 	@RequestMapping(value = "/userLoginForm", method = RequestMethod.GET)
 	public String userLoginForm(Model model) throws Exception{
@@ -34,7 +41,28 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/userLogout", method = RequestMethod.GET)
-	public void userLogout() {
+	public String userLogout(HttpSession session) {
+		session.invalidate();
+		return "redirect:index";
 	}
 
+	@RequestMapping(value= "/userJoin", method = RequestMethod.POST)
+	public String userJoin(UserVO userVo) throws Exception{
+		userService.insert(userVo);
+		return "redirect:index";
+	}
+	
+	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
+	public String userLogin(UserVO userVo, HttpSession session) throws Exception{
+		String openView = "";
+		int result = userService.select(userVo);
+		if(result == 1) {
+			session.setAttribute("loggedIn", userVo.getUserID());
+			openView = "redirect:index";
+		}else {
+			openView = "user/userLoginForm";
+		}
+		return openView;
+	}
+	
 }

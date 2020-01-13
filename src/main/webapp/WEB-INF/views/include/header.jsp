@@ -3,6 +3,21 @@
 <%@page import="org.apache.ibatis.session.SqlSession"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% 
+	
+	String logInOutText = "";
+	String logInOutHref = "";
+	 String logInId = (String)session.getAttribute("loggedIn");
+	
+	if(logInId == null || logInId.equals("")){
+		logInOutText = "로그인";
+		logInOutHref = "userLoginForm";
+	}else{
+		logInOutText = "로그아웃(" + logInId + ")"; 
+		logInOutHref = "userLogout";
+	}
+
+%>
 
 <!DOCTYPE html>
 <html>
@@ -52,7 +67,7 @@
 
 							<!-- Social Button -->
 							<div class="top-social-info">
-								<a href="categoryWriteForm">강의만들기</a><a href="userJoinForm">회원가입</a> <a href="userLoginForm">로그인</a>
+								<a href="categoryWriteForm">강의만들기</a><a href="userJoinForm">회원가입</a> <a href="<%=logInOutHref%>"><%=logInOutText %></a>
 							</div>
 						</div>
 					</div>
