@@ -3,6 +3,7 @@ package com.cos.controller;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -53,15 +54,20 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
-	public String userLogin(UserVO userVo, HttpSession session) throws Exception{
+	public String userLogin(UserVO userVo, HttpServletRequest req) throws Exception{
 		String openView = "";
-		int result = userService.select(userVo);
+		int result = userService.logIn(userVo);
 		if(result == 1) {
+			userVo = userService.select(userVo.getUserID());
+			HttpSession session = req.getSession();
 			session.setAttribute("loggedIn", userVo.getUserID());
+			session.setAttribute("userEmail", userVo.getUserEmail());
+			session.setAttribute("userName", userVo.getUserName());
 			openView = "redirect:index";
 		}else {
 			openView = "user/userLoginForm";
 		}
+		
 		return openView;
 	}
 	

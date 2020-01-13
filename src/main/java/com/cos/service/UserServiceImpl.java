@@ -19,7 +19,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int select(UserVO userVo) throws Exception {
-		return dao.select(userVo);
+	public int logIn(UserVO userVo) throws Exception {
+		return dao.logIn(userVo);
+	}
+	
+	@Override
+	public UserVO select(String userID) throws Exception {
+		return dao.select(userID);
 	}
 }

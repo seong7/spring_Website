@@ -4,10 +4,14 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cos.domain.user">
-	<select id="select" resultType="java.lang.Integer">
+			<!-- com.cos.domain.user.select 가 아래 sql 문의 위치값임 -->
+	<select id="logIn" resultType="java.lang.Integer">
 		SELECT count(*) FROM user WHERE userID = #{userID} AND userPW = #{userPW}
 	</select>
 	<insert id="insert">
 		INSERT INTO user(userID, userPW, userName, userEmail, userEmailCheck, userSalt) VALUES(#{userID}, #{userPW}, #{userName}, #{userEmail}, #{userEmailCheck}, #{userSalt})
 	</insert>
+	<select id="select" resultType="com.cos.domain.UserVO">
+		SELECT * FROM user WHERE userID = #{userID}
+	</select>
 </mapper>

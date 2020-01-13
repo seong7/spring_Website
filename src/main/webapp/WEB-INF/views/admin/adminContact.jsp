@@ -2,6 +2,11 @@
 
 <%@include file="../include/header.jsp"%>
 
+<%
+	String userName = (String)session.getAttribute("userName");
+	String userEmail = (String)session.getAttribute("userEmail");
+%>
+
 <br>
 <br>
 <br>
@@ -21,16 +26,16 @@
 
 								<!-- Contact Form Area -->
 								<div class="contact-form-area">
-									<form action="#" method="post">
+									<form action="sendEmail" method="post">
 										<div class="row">
 											<div class="col-12 col-lg-6">
 												<div class="form-group">
-													<input type="text" class="form-control" id="contact-name" placeholder="Name">
+													<input type="text" class="form-control" id="contact-name" placeholder="Name" value="<%=userName%>">
 												</div>
 											</div>
 											<div class="col-12 col-lg-6">
 												<div class="form-group">
-													<input type="email" class="form-control" id="contact-email" placeholder="Email">
+													<input type="email" class="form-control" id="contact-email" placeholder="Email" value="<%=userEmail%>">
 												</div>
 											</div>
 											<div class="col-12">

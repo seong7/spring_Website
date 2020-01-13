@@ -24,5 +24,11 @@ public class AdminController {
 		model.addAttribute("ctg4", ctService.selectGubun1(4));
 		return "admin/adminContact";
 	}
+	
+	@RequestMapping(value="/sendEmail", method = RequestMethod.POST)
+	public String sendEmail(Model model) throws Exception{
+		
+		return "redirect:adminContact";
+	}
 
 }
